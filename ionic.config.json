@@ -1,0 +1,7 @@
+{
+  "name": "cerca-driver",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
