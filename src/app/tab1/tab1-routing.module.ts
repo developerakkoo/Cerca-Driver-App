@@ -6,6 +6,10 @@ const routes: Routes = [
   {
     path: '',
     component: Tab1Page,
+  },
+  {
+    path: 'current-ride/:id',
+    loadChildren: () => import('./current-ride/current-ride.module').then( m => m.CurrentRidePageModule)
   }
 ];
 

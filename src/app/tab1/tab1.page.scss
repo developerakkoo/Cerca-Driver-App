@@ -1,0 +1,78 @@
+.ride-card {
+  margin: 16px;
+  padding: 12px;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  color: #2d2d2d;
+  transition: all 0.3s ease;
+  border: 1px solid #eaeaea;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  }
+
+  ion-card-header {
+    padding-bottom: 6px;
+
+    ion-card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #333;
+    }
+
+    ion-card-subtitle {
+      font-size: 0.95rem;
+      color: #777;
+      margin-top: 2px;
+    }
+  }
+
+  ion-card-content {
+    padding-top: 8px;
+
+    .ride-description {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .ride-info {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+
+      p {
+        font-size: 0.95rem;
+        color: #666;
+      }
+
+      strong {
+        color: #222;
+      }
+    }
+
+    .ride-actions {
+      margin-top: 14px;
+
+      ion-button {
+        --background: #28a745;
+        --background-hover: #218838;
+        --border-radius: 12px;
+        --box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+        font-weight: 600;
+        letter-spacing: 0.4px;
+        transition: all 0.3s ease-in-out;
+
+        &[disabled] {
+          --background: #ccc;
+          --color: #666;
+          --box-shadow: none;
+        }
+      }
+    }
+  }
+}

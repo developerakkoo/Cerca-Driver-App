@@ -34,4 +34,95 @@
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import "@ionic/angular/css/palettes/dark.system.css";
+// @import "@ionic/angular/css/palettes/dark.system.css";
+
+
+.form-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+
+    form{
+        width: 100%;
+        padding: 0 20px;
+    }
+
+    ion-item{
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+
+/* Container for the custom file input */
+.file-upload-container {
+    position: relative;
+    width: 300px;
+    margin: 20px auto;
+  }
+  
+  /* Hide the default file input */
+  .file-input {
+    display: none;
+  }
+  
+  /* Style for the custom label (acts as the button) */
+  .file-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    background-color: #4CAF50; /* Green button */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    transition: background-color 0.3s ease;
+  }
+  
+  .file-label:hover {
+    background-color: #45a049; /* Slightly darker green on hover */
+  }
+  
+  .file-label:active {
+    background-color: #388e3c; /* Darker on click */
+  }
+  
+  /* Style the file icon */
+  .file-icon {
+    margin-right: 10px;
+  }
+  
+  /* File name display */
+  .file1-name {
+    display: block;
+    margin-top: 10px;
+    color: #d0d0d0;
+    font-size: 14px;
+    font-style: italic;
+  }
+  .file2-name {
+    display: block;
+    margin-top: 10px;
+    color: #d0d0d0;
+    font-size: 14px;
+    font-style: italic;
+  }
+  
+  /* Style when file is selected */
+  .file1-name.selected {
+    font-weight: bold;
+  }
+  .file2-name.selected {
+    font-weight: bold;
+  }
+  

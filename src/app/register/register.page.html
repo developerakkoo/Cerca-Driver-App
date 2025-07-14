@@ -1,0 +1,67 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Register as a Driver In Cerca</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="login"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="form-container">
+    <ion-text color="primary" class="ion-text-center">
+      <h1>Cerca Driver App</h1>
+    </ion-text>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <ion-item>
+      <ion-label position="floating">Name <ion-text color="danger">*</ion-text></ion-label>
+      <ion-input required formControlName="name" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+      <ion-label position="floating">E-Mail <ion-text color="danger">*</ion-text></ion-label>
+      <ion-input required formControlName="email" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+      <ion-label position="floating">Password <ion-text color="danger">*</ion-text></ion-label>
+      <ion-input required formControlName="password" type="password"></ion-input>
+      </ion-item>
+      <ion-item>
+      <ion-label position="floating">Phone <ion-text color="danger">*</ion-text></ion-label>
+      <ion-input required formControlName="phone" type="tel"></ion-input>
+      </ion-item>
+      <br />
+      <!-- <div class="file-upload-container">
+        <ion-item>
+          <label class="custom-file-upload">
+            <ion-icon name="cloud-upload-outline"></ion-icon>
+            <span>Select Aadhar Card</span>
+            <input type="file" (change)="onFileSelected($event, 'aadhar')" accept="image/*" />
+          </label>
+        </ion-item>
+        <div *ngIf="aadharFile">
+          <img [src]="aadharFile" alt="Aadhar Preview" class="uploaded-image" />
+          <ion-button color="danger" (click)="removeFile('aadhar')">Cancel</ion-button>
+        </div>
+  
+        <ion-item>
+          <label class="custom-file-upload">
+            <ion-icon name="cloud-upload-outline"></ion-icon>
+            <span>Select License</span>
+            <input type="file" (change)="onFileSelected($event, 'license')" accept="image/*" />
+          </label>
+        </ion-item>
+        <div *ngIf="licenseFile">
+          <img [src]="licenseFile" alt="License Preview" class="uploaded-image" />
+          <ion-button color="danger" (click)="removeFile('license')">Cancel</ion-button>
+        </div>
+      </div> -->
+      <br>
+      <ion-button expand="block" color="primary" type="submit" [disabled]="form.invalid">
+      Register
+      </ion-button>
+    </form>
+
+    
+  </div>
+</ion-content>

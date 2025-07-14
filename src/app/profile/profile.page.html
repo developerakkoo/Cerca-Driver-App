@@ -1,0 +1,55 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Profile</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/tabs/tab3"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toast [isOpen]="documents.length == 0" message="Upload your documents to continue registrations." color="danger" position="top"></ion-toast>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label position="floating">E-Mail <ion-text color="danger">*</ion-text></ion-label>
+      <ion-input required formControlName="email" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Full Name <ion-text color="danger">*</ion-text></ion-label>
+      <ion-input required formControlName="name" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Phone No <ion-text color="danger">*</ion-text></ion-label>
+      <ion-input required formControlName="phone" type="number"></ion-input>
+    </ion-item>
+    <ion-button expand="block" color="primary" type="submit" [disabled]="form.invalid">
+      Save
+    </ion-button>
+  </form>
+<br>
+<hr>
+
+
+  <!-- Custom File Upload Container -->
+<div class="file-upload-container">
+  <input type="file" name="documents" id="file1" class="file-input" (change)="adharFileChange($event)" />
+  <label for="file" class="file-label">
+    <span class="file-icon"><i class="fas fa-upload"></i></span> <!-- FontAwesome upload icon -->
+
+    <span class="file-text">Select Adhar File</span> <!-- Button Text -->
+  </label>
+  <span id="file1-name" class="file-name">Upload Front Image</span>
+</div>
+<br>
+<div class="file-upload-container">
+  <input type="file" name="documents" id="file2" class="file-input" (change)="licenseFileChange($event)" />
+  <label for="file" class="file2-label">
+    <span class="file-icon"><i class="fas fa-upload"></i></span> <!-- FontAwesome upload icon -->
+
+    <span class="file-text">Select License File</span> <!-- Button Text -->
+  </label>
+  <span id="file-name2" class="file-name">Upload Front Image</span>
+</div>
+  
+</ion-content>

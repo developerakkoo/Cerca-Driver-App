@@ -1,17 +1,50 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
     <ion-title>
-      Tab 2
+      Salary Settlements
     </ion-title>
+    <ion-button fill="clear" slot="end" (click)="download()">
+      <ion-icon slot="icon-only" name="download"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="6"><ion-card>
+        <ion-card-header>
+          <ion-card-subtitle>Unsettled Amount</ion-card-subtitle>
+          <ion-card-title> {{Uamount | currency:"INR"}} </ion-card-title>
+        </ion-card-header>
+   
+      </ion-card></ion-col>
+      <ion-col size="6">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>Settled Amount</ion-card-subtitle>
+            <ion-card-title> {{Samount | currency:"INR"}} </ion-card-title>
+          </ion-card-header>
+     
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-list>
+    <ion-item *ngFor="let settlement of settlements">
+      <ion-label>
+        <h2>{{ settlement.name }}</h2>
+        <p>Amount: {{ settlement.amount | currency:"INR" }}</p>
+        <p>Date: {{ settlement.date | date }}</p>
+      </ion-label>
+      <ion-badge  [color]="settlement.status === 'Completed' ? 'success' : 'warning'" mode="ios"> {{settlement.status}} </ion-badge>
+    </ion-item>
+  </ion-list>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <ion-button mode="ios" (click)="requestForSettlements()" expand="block" >
+    Request for Settlements
+    <ion-icon slot="end" name="send"></ion-icon>
+  </ion-button>
+
+  
 </ion-content>

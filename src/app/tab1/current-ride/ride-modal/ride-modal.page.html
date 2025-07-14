@@ -1,0 +1,35 @@
+<ion-content [fullscreen]="true">
+  <div class="container">
+    <!-- OTP Input -->
+    <ion-input
+      type="number"
+      placeholder="Start OTP"
+      fill="outline"
+      label="Start OTP"
+      labelPlacement="stacked"
+    ></ion-input>
+
+    <!-- Ride Action Buttons -->
+    <div class="ride-actions">
+      <ion-button (click)="startRide()" expand="block" color="success">
+        Start Ride
+      </ion-button>
+      <ion-button (click)="stopRide()" expand="block" color="danger">
+        Stop Ride
+      </ion-button>
+    </div>
+
+    <!-- Pickup and Drop Address Inputs -->
+  
+  </div>
+
+  <div class="address-info">
+       
+
+    <ion-label position="stacked">Drop Address {{dropAddress}} </ion-label>
+  <br>
+
+    <ion-label position="stacked">Estimated Time: {{ estimatedTime }}</ion-label>
+    
+</div>
+</ion-content>

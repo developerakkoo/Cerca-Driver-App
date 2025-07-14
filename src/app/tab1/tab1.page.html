@@ -1,17 +1,50 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar [color]="isOnlineForRides ? 'primary' : 'medium'">
     <ion-title>
-      Tab 1
+      Bookings
     </ion-title>
+    
   </ion-toolbar>
+  <ion-item lines="none">
+    <ion-label>Toggle for getting rides </ion-label>
+    <ion-toggle mode="ios" (ionChange)="toggleReadyForRides($event)" slot="end"></ion-toggle>
+  </ion-item>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-list>
+  <ion-list-header>
+    <ion-label>All New Rides</ion-label>
+  </ion-list-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <ion-card class="ride-card" *ngFor="let ride of rides">
+    <ion-card-header>
+      <ion-card-title>{{ ride.name }}</ion-card-title>
+      <ion-card-subtitle>{{ ride.location }}</ion-card-subtitle>
+    </ion-card-header>
+  
+    <ion-card-content>
+    
+  
+      <p class="ride-description">{{ ride.description }}</p>
+      <div class="ride-info">
+        <p><strong>Price:</strong> ₹{{ ride.price }}</p>
+        <p><strong>Duration:</strong> {{ ride.duration }}</p>
+      </div>
+  
+      <div class="ride-actions">
+        <ion-button
+          expand="solid"
+          mode="ios"
+          color="success"
+          [disabled]="!ride.readyForRides"
+          (click)="acceptRide(ride.id)"
+        >
+          {{ ride.readyForRides ? 'Accept Ride' : 'Ride Not Ready' }}
+        </ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+  
+</ion-list>
 </ion-content>

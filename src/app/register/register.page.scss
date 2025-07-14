@@ -1,0 +1,47 @@
+.file-upload-container {
+  margin-top: 20px;
+
+  ion-item {
+    margin-bottom: 10px;
+  }
+
+  .custom-file-upload {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: #3880ff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+
+    ion-icon {
+      margin-right: 8px;
+      font-size: 18px;
+    }
+
+    &:hover {
+      background-color: #3171e0;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+  }
+
+  .uploaded-image {
+    display: block;
+    max-width: 40%;
+    height: auto;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  ion-button {
+    margin-top: 5px;
+  }
+}
