@@ -22,7 +22,7 @@ export class LoginPage implements OnInit {
      private loadingController: LoadingController
   ) { 
     this.form = this.formBuilder.group({
-      email: ['test@gmail.com'],
+      email: ['akshay@test.com'],
       password: ['test123']
     });
   }

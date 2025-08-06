@@ -14,7 +14,9 @@ export class AppComponent {
     private router: Router,
     private toast: ToastController,
     // private loadingController: LoadingController 
-  ) {}
+  ) {
+    this.checkLogin();
+  }
 
 
   listenForAppState() {

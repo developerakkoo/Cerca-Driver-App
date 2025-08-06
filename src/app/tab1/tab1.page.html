@@ -7,7 +7,7 @@
   </ion-toolbar>
   <ion-item lines="none">
     <ion-label>Toggle for getting rides </ion-label>
-    <ion-toggle mode="ios" (ionChange)="toggleReadyForRides($event)" slot="end"></ion-toggle>
+    <ion-toggle mode="ios" [(ngModel)]="isOnlineForRides" (ionChange)="toggleReadyForRides($event)" slot="end"></ion-toggle>
   </ion-item>
 </ion-header>
 
