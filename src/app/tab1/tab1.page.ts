@@ -16,28 +16,29 @@ export class Tab1Page {
 
   driverId: string = '';
   driver: any = {};
-  rides = [
-    {
-      id:1,
-      name: 'Abhilash Rathod',
-      description: 'Description for Ride 1',
-      location: 'Viman Nagar, Pune',
-      image: 'https://via.placeholder.com/150',
-      price: 220,
-      duration: '30 minutes',
-      readyForRides: true
-    }
-    ,{
-      id:2,
-      name: 'John Doe',
-      description: 'Description for Ride 2',
-      location: 'Kothrud, Pune',
-      image: 'https://via.placeholder.com/150',
-      price: 300,
-      duration: '45 minutes',
-      readyForRides: false
-    }
-  ]
+  rides
+  :any[] = [
+    // {
+    //   id:1,
+    //   name: 'Abhilash Rathod',
+    //   description: 'Description for Ride 1',
+    //   location: 'Viman Nagar, Pune',
+    //   image: 'https://via.placeholder.com/150',
+    //   price: 220,
+    //   duration: '30 minutes',
+    //   readyForRides: true
+    // }
+    // ,{
+    //   id:2,
+    //   name: 'John Doe',
+    //   description: 'Description for Ride 2',
+    //   location: 'Kothrud, Pune',
+    //   image: 'https://via.placeholder.com/150',
+    //   price: 300,
+    //   duration: '45 minutes',
+    //   readyForRides: false
+    // }
+  ];
 
   isOnlineForRides = false;
   constructor(private http: HttpService,
@@ -262,10 +263,10 @@ async startListeningForRides(){
        // Start listening for rides (should ideally be inside connect block or separate logic)
       });
       
-  this.getDriverDetailsFromServer();
+  // this.getDriverDetailsFromServer();
   
   // Listen for ride requests from the server
-  this.socket.on('driver', (ride: any) => {
+  this.socket.on('newRideRequest', (ride: any) => {
     console.log('New ride request received:', ride);
     this.presentToast(`New ride request from ${ride.name}`);
     // You can also navigate to a ride details page or show a modal here

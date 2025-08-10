@@ -11,7 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Geolocation } from '@capacitor/geolocation';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
-const config: SocketIoConfig = { url: 'https://api.myserverdevops.com', options: {} };
+const config: SocketIoConfig = { url: 'http://192.168.1.10:3000', options: {} };
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, IonicStorageModule.forRoot({

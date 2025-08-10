@@ -12,24 +12,32 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-<ion-list>
+
+  <ion-card *ngIf="rides.length === 0">
+   
+    <ion-card-content>
+      No Bookings Yet!
+      <p>When you are ready to accept rides, toggle the switch above.</p>
+    </ion-card-content>
+  </ion-card>
+<ion-list *ngIf="rides.length > 0">
   <ion-list-header>
     <ion-label>All New Rides</ion-label>
   </ion-list-header>
 
-  <ion-card class="ride-card" *ngFor="let ride of rides">
+  <ion-card class="ride-card" *ngFor="let ride of rides" >
     <ion-card-header>
-      <ion-card-title>{{ ride.name }}</ion-card-title>
-      <ion-card-subtitle>{{ ride.location }}</ion-card-subtitle>
+      <ion-card-title>{{ ride?.name }}</ion-card-title>
+      <ion-card-subtitle>{{ ride?.location }}</ion-card-subtitle>
     </ion-card-header>
   
     <ion-card-content>
     
   
-      <p class="ride-description">{{ ride.description }}</p>
+      <p class="ride-description">{{ ride?.description }}</p>
       <div class="ride-info">
-        <p><strong>Price:</strong> ₹{{ ride.price }}</p>
-        <p><strong>Duration:</strong> {{ ride.duration }}</p>
+        <p><strong>Price:</strong> ₹{{ ride?.price }}</p>
+        <p><strong>Duration:</strong> {{ ride?.duration }}</p>
       </div>
   
       <div class="ride-actions">
@@ -40,7 +48,7 @@
           [disabled]="!ride.readyForRides"
           (click)="acceptRide(ride.id)"
         >
-          {{ ride.readyForRides ? 'Accept Ride' : 'Ride Not Ready' }}
+          {{ ride?.readyForRides ? 'Accept Ride' : 'Ride Not Ready' }}
         </ion-button>
       </div>
     </ion-card-content>
