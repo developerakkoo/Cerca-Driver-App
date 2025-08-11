@@ -1,0 +1,366 @@
+:host {
+  --modal-background: #ffffff;
+  --card-background: #f8f9fa;
+  --border-color: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --success-color: #28a745;
+  --warning-color: #ffc107;
+  --danger-color: #dc3545;
+  --primary-color: #007bff;
+}
+
+.modal-content {
+  --background: var(--modal-background);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  
+  .header-icon {
+    font-size: 24px;
+    color: var(--primary-color);
+  }
+  
+  span {
+    font-weight: 600;
+    font-size: 18px;
+  }
+}
+
+.ride-details-container {
+  padding: 16px;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+// Status Banner
+.status-banner {
+  background: linear-gradient(135deg, var(--primary-color), #0056b3);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  color: white;
+  box-shadow: 0 4px 20px rgba(0, 123, 255, 0.3);
+  
+  &.status-accepted {
+    background: linear-gradient(135deg, var(--warning-color), #e0a800);
+    box-shadow: 0 4px 20px rgba(255, 193, 7, 0.3);
+  }
+  
+  &.status-in_progress {
+    background: linear-gradient(135deg, var(--primary-color), #0056b3);
+    box-shadow: 0 4px 20px rgba(0, 123, 255, 0.3);
+  }
+  
+  &.status-completed {
+    background: linear-gradient(135deg, var(--success-color), #1e7e34);
+    box-shadow: 0 4px 20px rgba(40, 167, 69, 0.3);
+  }
+  
+  .status-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    
+    .status-icon {
+      ion-icon {
+        font-size: 32px;
+        color: white;
+      }
+    }
+    
+    .status-text {
+      flex: 1;
+      
+      h2 {
+        margin: 0 0 4px 0;
+        font-size: 20px;
+        font-weight: 700;
+        color: white;
+      }
+      
+      p {
+        margin: 0;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.9);
+        opacity: 0.9;
+      }
+    }
+  }
+}
+
+// Quick Actions
+.quick-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+  
+  ion-button {
+    --border-radius: 12px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    height: 48px;
+    font-weight: 600;
+    
+    ion-icon {
+      font-size: 18px;
+    }
+  }
+}
+
+// Trip Summary Card
+.trip-summary-card {
+  margin-bottom: 20px;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  
+  ion-card-header {
+    padding: 20px 20px 0 20px;
+    
+    ion-card-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+      
+      ion-icon {
+        font-size: 20px;
+      }
+    }
+  }
+  
+  ion-card-content {
+    padding: 20px;
+    
+    .trip-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      
+      .stat-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 8px;
+        
+        ion-icon {
+          font-size: 24px;
+        }
+        
+        .stat-content {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          
+          .stat-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+          }
+          
+          .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Location Cards
+.location-card {
+  margin-bottom: 16px;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  
+  &.pickup-card {
+    border-left: 4px solid var(--success-color);
+  }
+  
+  &.dropoff-card {
+    border-left: 4px solid var(--danger-color);
+  }
+  
+  ion-card-header {
+    padding: 16px 20px 0 20px;
+    
+    ion-card-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      
+      ion-icon {
+        font-size: 18px;
+      }
+    }
+  }
+  
+  ion-card-content {
+    padding: 20px;
+    
+    .location-details {
+      .address {
+        margin: 0 0 12px 0;
+        font-size: 14px;
+        line-height: 1.5;
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+      
+      .coordinates {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        color: var(--text-secondary);
+        
+        ion-icon {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+
+// Ride Info Card
+.ride-info-card {
+  margin-bottom: 20px;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  
+  ion-card-header {
+    padding: 20px 20px 0 20px;
+    
+    ion-card-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+      
+      ion-icon {
+        font-size: 20px;
+      }
+    }
+  }
+  
+  ion-card-content {
+    padding: 20px;
+    
+    .ride-info {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      
+      .info-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px solid var(--border-color);
+        
+        &:last-child {
+          border-bottom: none;
+        }
+        
+        .label {
+          font-size: 14px;
+          color: var(--text-secondary);
+          font-weight: 500;
+        }
+        
+        .value {
+          font-size: 14px;
+          color: var(--text-primary);
+          font-weight: 600;
+          text-align: right;
+          max-width: 60%;
+          word-break: break-word;
+        }
+        
+        ion-badge {
+          font-size: 12px;
+          font-weight: 600;
+          padding: 6px 12px;
+          border-radius: 20px;
+        }
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 480px) {
+  .ride-details-container {
+    padding: 12px;
+  }
+  
+  .status-banner {
+    padding: 16px;
+    margin-bottom: 16px;
+    
+    .status-content {
+      gap: 12px;
+      
+      .status-icon ion-icon {
+        font-size: 28px;
+      }
+      
+      .status-text h2 {
+        font-size: 18px;
+      }
+    }
+  }
+  
+  .quick-actions {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  
+  .trip-summary-card {
+    .trip-stats {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+  }
+  
+  .location-card,
+  .ride-info-card {
+    margin-bottom: 12px;
+    
+    ion-card-header {
+      padding: 16px 16px 0 16px;
+    }
+    
+    ion-card-content {
+      padding: 16px;
+    }
+  }
+}
+
+// Dark mode support (if needed)
+@media (prefers-color-scheme: dark) {
+  :host {
+    --modal-background: #1a1a1a;
+    --card-background: #2d2d2d;
+    --border-color: #404040;
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0b0;
+  }
+}

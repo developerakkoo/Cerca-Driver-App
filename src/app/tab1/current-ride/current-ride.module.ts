@@ -7,14 +7,17 @@ import { IonicModule } from '@ionic/angular';
 import { CurrentRidePageRoutingModule } from './current-ride-routing.module';
 
 import { CurrentRidePage } from './current-ride.page';
+import { RideCompletionModalComponent } from './ride-completion-modal.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CurrentRidePageRoutingModule
+    CurrentRidePageRoutingModule,
+    CurrentRidePage,
+    RideCompletionModalComponent
   ],
-  declarations: [CurrentRidePage]
+  declarations: []
 })
 export class CurrentRidePageModule {}

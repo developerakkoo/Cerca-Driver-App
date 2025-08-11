@@ -1,12 +1,356 @@
 <ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
-    <ion-title>Current Ride</ion-title>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="tabs/tabs/tab1"></ion-back-button>
+      <ion-button (click)="router.navigate(['/tabs/tabs/tab1'])" fill="clear">
+        <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+      </ion-button>
     </ion-buttons>
+    <ion-title class="ion-text-center">
+        Current Ride
+    </ion-title>
+    <ion-button slot="end" (click)="isModalOpen = true" expand="block" fill="clear" shape="round">
+      open Details
+    </ion-button>
+    
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="ride-content">
+  <div *ngIf="!rideData" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Loading ride details...</p>
+  </div>
 
+  <div *ngIf="rideData" class="ride-container">
+    <!-- Status Banner -->
+    <!-- <div class="status-banner">
+      <div class="status-content">
+        <ion-icon [name]="getStatusIcon()" [color]="getStatusColor()" class="status-icon"></ion-icon>
+        <span class="status-text">{{ rideData.status | titlecase }}</span>
+      </div>
+    </div> -->
+
+    <!-- Ride Timer -->
+    <div *ngIf="rideData.status === 'in_progress'" class="ride-timer">
+      <ion-icon name="time" class="timer-icon"></ion-icon>
+      <span class="timer-text">{{ rideDuration }}</span>
+    </div>
+
+    <!-- Progress Section -->
+    <div *ngIf="rideData.status === 'in_progress'" class="progress-section">
+      <div class="progress-header">
+        <span class="progress-label">Ride Progress</span>
+        <span class="progress-percentage">{{ rideProgress | number:'1.0-0' }}%</span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-fill" [style.width.%]="rideProgress"></div>
+      </div>
+      <div class="progress-labels">
+        <span>Started</span>
+        <span>In Progress</span>
+        <span>Completed</span>
+      </div>
+    </div>
+
+
+    <!-- Action Buttons -->
+    <div *ngIf="rideData.status === 'accepted'" class="action-buttons">
+      <ion-button 
+        (click)="startRide()" 
+        [disabled]="!startOtp || startOtp.length !== 4"
+        class="start-btn" 
+        expand="block">
+        <ion-icon name="play" slot="start"></ion-icon>
+        Start Ride
+      </ion-button>
+      
+      <!-- Debug button - remove this after testing -->
+      <ion-button 
+        (click)="debugOtpValues()" 
+        fill="outline" 
+        color="medium"
+        size="small"
+        style="margin-top: 0.5rem;">
+        Debug OTP Values
+      </ion-button>
+      
+      <!-- Debug socket button - remove this after testing -->
+      <ion-button 
+        (click)="debugSocketConnection()" 
+        fill="outline" 
+        color="warning"
+        size="small"
+        style="margin-top: 0.5rem;">
+        Debug Socket
+      </ion-button>
+    </div>
+
+    <div *ngIf="rideData.status === 'in_progress'" class="action-buttons">
+      <ion-button 
+        (click)="completeRide()" 
+        [disabled]="!stopOtp || stopOtp.length !== 4"
+        class="complete-btn" 
+        expand="block">
+        <ion-icon name="checkmark" slot="start"></ion-icon>
+        Complete Ride
+      </ion-button>
+    </div>
+
+    <!-- OTP Input Section -->
+    <div class="otp-section">
+      <ion-card *ngIf="rideData.status === 'accepted'" class="otp-card">
+        <ion-card-header>
+          <ion-card-title>
+            <ion-icon name="play-circle" slot="start" class="card-icon"></ion-icon>
+            Start Ride OTP
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+                       <ion-input
+               [(ngModel)]="startOtp"
+               type="text"
+               inputmode="numeric"
+               pattern="[0-9]*"
+               placeholder="Enter 4-digit OTP"
+               maxlength="4"
+               (ionInput)="onStartOtpInput($event)"
+               class="otp-input">
+             </ion-input>
+          <p class="otp-hint">Enter the OTP provided by the rider to start the ride</p>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card *ngIf="rideData.status === 'in_progress'" class="otp-card">
+        <ion-card-header>
+          <ion-card-title>
+            <ion-icon name="checkmark-circle" slot="start" class="card-icon"></ion-icon>
+            Complete Ride OTP
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+                       <ion-input
+               [(ngModel)]="stopOtp"
+               type="text"
+               inputmode="numeric"
+               pattern="[0-9]*"
+               placeholder="Enter 4-digit OTP"
+               maxlength="4"
+               (ionInput)="onStopOtpInput($event)"
+               class="otp-input">
+             </ion-input>
+          <p class="otp-hint">Enter the OTP provided by the rider to complete the ride</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Completion Message -->
+    <div *ngIf="rideData.status === 'completed'" class="completion-message">
+      <ion-card class="completion-card">
+        <ion-card-content>
+          <div class="completion-icon">
+            <ion-icon name="checkmark-circle" color="success"></ion-icon>
+          </div>
+          <h2>Ride Completed Successfully!</h2>
+          <p>Thank you for providing a safe ride.</p>
+          
+          <div class="ride-summary">
+            <div class="summary-item">
+              <span class="label">Fare:</span>
+              <span class="value">${{ rideData?.fare || '0' }}</span>
+            </div>
+            <div class="summary-item">
+              <span class="label">Distance:</span>
+              <span class="value">{{ rideData?.distanceInKm || '0' }} km</span>
+            </div>
+            <div class="summary-item">
+              <span class="label">Duration:</span>
+              <span class="value">{{ getEstimatedTime() }}</span>
+            </div>
+          </div>
+          
+          <div class="redirect-info">
+            <p>Redirecting to main page in 3 seconds...</p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
 </ion-content>
+
+<!-- Ride Details Modal -->
+<ion-modal 
+  #rideDetailsModal 
+  [isOpen]="isModalOpen" 
+  (didDismiss)="isModalOpen = false"
+  [backdropDismiss]="false"
+  [breakpoints]="[0.3, 0.5, 1]" 
+  [initialBreakpoint]="0.5"
+  class="ride-details-modal">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>
+          <ion-icon name="information-circle" slot="start" class="title-icon"></ion-icon>
+          Ride Details
+        </ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="isModalOpen = false" fill="clear" class="close-btn">
+            <ion-icon name="close" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    
+    <ion-content>
+      <div class="modal-body">
+        <!-- Rider Information -->
+        <ion-card class="rider-card">
+          <ion-card-header>
+            <ion-card-title>
+              <ion-icon name="person" slot="start" class="card-icon"></ion-icon>
+              Rider Information
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <div class="rider-info">
+              <ion-avatar class="rider-avatar">
+                <ion-icon name="person" class="avatar-icon"></ion-icon>
+              </ion-avatar>
+              <div class="rider-details">
+                <h3>{{ rideData?.rider?.name || 'Rider' }}</h3>
+                <p class="rider-status">
+                  <ion-icon name="checkmark-circle" color="success"></ion-icon>
+                  Verified Rider
+                </p>
+              </div>
+            </div>
+            <div class="rider-actions">
+              <ion-button (click)="callRider()" fill="clear" color="success" class="action-btn call-btn">
+                <ion-icon name="call" slot="start"></ion-icon>
+                Call Rider
+              </ion-button>
+              <ion-button (click)="openChat()" fill="clear" color="secondary" class="action-btn chat-btn">
+                <ion-icon name="chatbubble" slot="start"></ion-icon>
+                Chat
+              </ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+
+        <!-- Trip Details -->
+        <ion-card class="trip-card">
+          <ion-card-header>
+            <ion-card-title>
+              <ion-icon name="car" slot="start" class="card-icon"></ion-icon>
+              Trip Details
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <div class="trip-stats">
+              <div class="stat-item">
+                <ion-icon name="cash" color="success"></ion-icon>
+                <div class="stat-content">
+                  <span class="stat-label">Fare</span>
+                  <span class="stat-value">${{ rideData?.fare || '0' }}</span>
+                </div>
+              </div>
+              <div class="stat-item">
+                <ion-icon name="map" color="primary"></ion-icon>
+                <div class="stat-content">
+                  <span class="stat-label">Distance</span>
+                  <span class="stat-value">{{ rideData?.distanceInKm || '0' }} km</span>
+                </div>
+              </div>
+              <div class="stat-item">
+                <ion-icon name="time" color="warning"></ion-icon>
+                <div class="stat-content">
+                  <span class="stat-label">Estimated Time</span>
+                  <span class="stat-value">{{ getEstimatedTime() }}</span>
+                </div>
+              </div>
+              <div class="stat-item">
+                <ion-icon name="card" color="medium"></ion-icon>
+                <div class="stat-content">
+                  <span class="stat-label">Payment Method</span>
+                  <span class="stat-value">{{ rideData?.paymentMethod || 'Cash' }}</span>
+                </div>
+              </div>
+            </div>
+          </ion-card-content>
+        </ion-card>
+
+        <!-- Location Details -->
+        <ion-card class="location-card">
+          <ion-card-header>
+            <ion-card-title>
+              <ion-icon name="location" slot="start" class="card-icon"></ion-icon>
+              Location Details
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <div class="location-item pickup-location">
+              <ion-icon name="location" color="success"></ion-icon>
+              <div class="location-content">
+                <span class="location-label">Pickup Location</span>
+                <span class="location-address">{{ rideData?.pickupAddress || 'N/A' }}</span>
+                <span class="location-coords">
+                  {{ rideData?.pickupLocation?.coordinates?.[1] || '0' }}, 
+                  {{ rideData?.pickupLocation?.coordinates?.[0] || '0' }}
+                </span>
+              </div>
+            </div>
+            
+            <div class="location-divider">
+              <ion-icon name="arrow-down" color="medium"></ion-icon>
+            </div>
+            
+            <div class="location-item dropoff-location">
+              <ion-icon name="location" color="danger"></ion-icon>
+              <div class="location-content">
+                <span class="location-label">Drop-off Location</span>
+                <span class="location-address">{{ rideData?.dropoffAddress || 'N/A' }}</span>
+                <span class="location-coords">
+                  {{ rideData?.dropoffLocation?.coordinates?.[1] || '0' }}, 
+                  {{ rideData?.dropoffLocation?.coordinates?.[0] || '0' }}
+                </span>
+              </div>
+            </div>
+          </ion-card-content>
+        </ion-card>
+
+        <!-- Ride Information -->
+        <ion-card class="info-card">
+          <ion-card-header>
+            <ion-card-title>
+              <ion-icon name="information" slot="start" class="card-icon"></ion-icon>
+              Ride Information
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <div class="info-item">
+              <ion-icon name="car" color="primary"></ion-icon>
+              <div class="info-content">
+                <span class="info-label">Ride Type</span>
+                <span class="info-value">{{ rideData?.rideType || 'Standard' }}</span>
+              </div>
+            </div>
+            <div class="info-item">
+              <ion-icon name="calendar" color="secondary"></ion-icon>
+              <div class="info-content">
+                <span class="info-label">Created At</span>
+                <span class="info-value">{{ rideData?.createdAt | date:'medium' }}</span>
+              </div>
+            </div>
+            <div class="info-item">
+              <ion-icon name="finger-print" color="medium"></ion-icon>
+              <div class="info-content">
+                <span class="info-label">Ride ID</span>
+                <span class="info-value">{{ rideData?._id || 'N/A' }}</span>
+              </div>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>

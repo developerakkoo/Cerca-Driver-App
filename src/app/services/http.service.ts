@@ -28,4 +28,12 @@ export class HttpService {
   toggleReadyForRides(id:any,body:any){
     return this.http.put(environment.apiUrl +`/driver/ready-for-ride${id}`,body);
   }
+
+  getRideById(id:any){
+    return this.http.get(environment.apiUrl +`/rides/rides/${id}`);
+  }
+
+  updateRide(id:any,body:any){
+    return this.http.put(environment.apiUrl +`/rides/rides/${id}`,body);
+  }
 }
